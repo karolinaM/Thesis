@@ -1,0 +1,158 @@
+# echo 1 > /sys/class/c2port/c2port0/access
+# cat /sys/class/c2port/c2port0/dev_id
+28
+
+[13695.710000] c2port_write_ar addr 0x0
+[13695.710000] c2port_read_dr data 0x1c
+
+# cat /sys/class/c2port/c2port0/rev_id
+1
+[13774.400000] c2port_write_ar addr 0x1
+[13774.410000] c2port_read_dr data 0x1
+
+################
+
+# echo 1 > /sys/class/c2port/c2port0/flash_access
+
+[13915.570000] c2port_write_ar addr 0x2
+[13915.570000] c2port_write_dr data 0x2
+[13915.570000] c2port_write_dr data 0x1
+
+
+# cat /sys/class/c2port/c2port0/flash_data
+cat: read error: Device or resource busy
+
+[13984.950000] c2port_write_ar addr 0xb4
+[13984.950000] c2port_write_dr data 0x6
+[13984.960000] c2port_read_ar addr 0x1
+[13984.960000] c2port_read_ar addr 0x1
+[13984.970000] c2port_read_dr data 0x1
+[13984.970000] c2port c2port0: cannot read uc flash
+
+malfunction more detailed:
+[103036.230000] c2port_write_ar addr 0xb4
+[103036.230000] c2port_write_dr data 0x6
+[103036.230000] c2port_read_ar addr 0x1
+[103036.240000]  c2port_poll_in_busy addr 0x1
+[103036.240000] c2port_read_ar addr 0x1
+[103036.250000]  c2port_poll_out_ready addr 0x1
+[103036.250000] c2port_read_dr data 0x1
+[103036.250000] __c2port_read_flash_data status 0x1
+[103036.260000] c2port c2port0: cannot read uc flash
+
+############ new test 14.03.2015 ##################
+
+[   11.290000] c2port c2port0: C2 port C8051F502 added
+[   11.290000] c2port c2port0: C8051F502 flash has 126 blocks x 512 bytes (64512 bytes total)
+
+root@EasyLink-Mini:~# cat /sys/class/c2port/c2port0/dev_id
+28
+
+[   56.910000] c2port_write_ar : addr 0x00
+[   56.910000] c2port_read_dr : data 0x1C
+
+root@EasyLink-Mini:~# cat /sys/class/c2port/c2port0/rev_id
+1
+
+[   87.510000] c2port_write_ar : addr 0x00
+[   87.510000] c2port_read_dr : data 0x01
+
+root@EasyLink-Mini:~# echo 1 > /sys/class/c2port/c2port0/flash_access
+
+[  115.460000] c2port_write_ar : addr 0x00
+[  115.460000] c2port_write_dr : data 0x00
+[  115.460000] c2port_write_dr : data 0x00
+
+root@EasyLink-Mini:~# echo 1 > /sys/class/c2port/c2port0/flash_erase
+ash: write error: Input/output error
+
+[  142.010000] c2port_write_ar : addr 0x00
+[  142.010000] c2port_write_dr : data 0x00
+[  142.010000] c2port_read_ar : addr 0x01
+[  142.010000] c2port_read_ar : addr 0x01
+[  142.010000] c2port_read_dr : data 0x0D
+[  142.010000] c2port_write_dr : data 0x00
+[  142.010000] c2port_read_ar : addr 0x00
+[  142.010000] c2port_write_dr : data 0x00
+[  142.010000] c2port_read_ar : addr 0x00
+[  142.010000] c2port_write_dr : data 0x00
+
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+[  142.020000] c2port_read_ar : addr 0x00
+
+...
+
+[  142.870000] c2port_read_ar : addr 0x00
+[  142.880000] c2port_read_ar : addr 0x00
+[  142.880000] c2port c2port0: cannot erase C8051F502 flash
+
+root@EasyLink-Mini:~#  dd if=/sys/class/c2port/c2port0/flash_data bs=1 count=4 > /dev/null
+4+0 records in
+4+0 records out
+[  736.640000] c2port_write_ar : addr 0x00
+[  736.640000] c2port_write_dr : data 0x00
+[  736.640000] c2port_read_ar : addr 0x01
+[  736.640000] c2port_read_ar : addr 0x01
+[  736.640000] c2port_read_dr : data 0x0D
+[  736.650000] c2port_write_dr : data 0x00
+[  736.650000] c2port_read_ar : addr 0x00
+[  736.650000] c2port_write_dr : data 0x00
+[  736.650000] c2port_read_ar : addr 0x00
+[  736.650000] c2port_write_dr : data 0x00
+[  736.650000] c2port_read_ar : addr 0x01
+[  736.650000] c2port_read_ar : addr 0x01
+[  736.650000] c2port_read_dr : data 0x0D
+[  736.650000] c2port_read_ar : addr 0x01
+[  736.650000] c2port_read_dr : data 0xFF
+[  736.650000] c2port_write_ar : addr 0x00
+[  736.660000] c2port_write_dr : data 0x00
+[  736.660000] c2port_read_ar : addr 0x01
+[  736.660000] c2port_read_ar : addr 0x01
+[  736.660000] c2port_read_dr : data 0x0D
+[  736.660000] c2port_write_dr : data 0x00
+[  736.660000] c2port_read_ar : addr 0x00
+[  736.660000] c2port_write_dr : data 0x00
+[  736.660000] c2port_read_ar : addr 0x00
+[  736.660000] c2port_write_dr : data 0x00
+[  736.660000] c2port_read_ar : addr 0x01
+[  736.660000] c2port_read_ar : addr 0x01
+[  736.660000] c2port_read_dr : data 0x0D
+[  736.670000] c2port_read_ar : addr 0x01
+[  736.670000] c2port_read_dr : data 0xFF
+[  736.670000] c2port_write_ar : addr 0x00
+[  736.670000] c2port_write_dr : data 0x00
+[  736.670000] c2port_read_ar : addr 0x01
+[  736.670000] c2port_read_ar : addr 0x01
+[  736.670000] c2port_read_dr : data 0x0D
+[  736.670000] c2port_write_dr : data 0x00
+[  736.670000] c2port_read_ar : addr 0x00
+[  736.670000] c2port_write_dr : data 0x00
+[  736.670000] c2port_read_ar : addr 0x00
+[  736.680000] c2port_write_dr : data 0x00
+[  736.680000] c2port_read_ar : addr 0x01
+[  736.680000] c2port_read_ar : addr 0x01
+[  736.680000] c2port_read_dr : data 0x0D
+[  736.680000] c2port_read_ar : addr 0x01
+[  736.680000] c2port_read_dr : data 0xFF
+[  736.680000] c2port_write_ar : addr 0x00
+[  736.680000] c2port_write_dr : data 0x00
+[  736.680000] c2port_read_ar : addr 0x01
+[  736.680000] c2port_read_ar : addr 0x01
+[  736.690000] c2port_read_dr : data 0x0D
+[  736.690000] c2port_write_dr : data 0x00
+[  736.690000] c2port_read_ar : addr 0x00
+[  736.690000] c2port_write_dr : data 0x00
+[  736.690000] c2port_read_ar : addr 0x00
+[  736.690000] c2port_write_dr : data 0x00
+[  736.690000] c2port_read_ar : addr 0x01
+[  736.690000] c2port_read_ar : addr 0x01
+[  736.690000] c2port_read_dr : data 0x0D
+[  736.690000] c2port_read_ar : addr 0x01
+[  736.690000] c2port_read_dr : data 0xFF
+
